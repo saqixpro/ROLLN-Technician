@@ -13,16 +13,26 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.rollntech.rollnt",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyBYDjQIEVyQIqaHj4Qhfu5UK-clWTVHcBc"
+      }
     },
     "android": {
+      "package": "com.rollntech.rollnt",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBrRaFsfP9KhqhJdWLyVMoA1GU9g9No-DU"
+        }
       }
     },
     "web": {

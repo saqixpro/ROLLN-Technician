@@ -1,0 +1,12 @@
+{
+  "INVALID_PASSWORD": "Password must be at least one number, one lowercase and one uppercase letter and at least six characters",
+  "INVALID_EMAIL": "Email is not valid",
+  "INVALID_MAKE": "The make your provided is currently not supported",
+  "INVALID_MODEL": "The model you provided is currently not supported",
+  "INVALID_YEAR": "The year you provided is currently not supported",
+  "INVALID_LICENSE": "The License Number is not Valid",
+  "INVALID_LICENSE_PLATE": "The License Plate Number Provided is not Valid",
+  "INVALID_CIP": "The CIP provided is not valid",
+  "INVALID_AGE": "The Date of Birth Provided is not valid",
+  "INVALID_SSN": "The SSN provided is not valid"
+}

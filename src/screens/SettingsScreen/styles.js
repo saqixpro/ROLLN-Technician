@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.background_secondary,
   },
+
   text: {
     color: colors.textColor,
   },

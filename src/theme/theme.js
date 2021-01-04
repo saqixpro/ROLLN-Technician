@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 export const colors = {
   gray: "#535353",
   background: "#22272C",

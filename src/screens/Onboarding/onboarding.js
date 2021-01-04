@@ -9,14 +9,13 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-swiper";
 import { colors } from "../../theme/theme";
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+
 import { WebView } from "react-native-webview";
 import StaticLinks from "../../constants/web_links.json";
 import { ActionTypes } from "../../constants";

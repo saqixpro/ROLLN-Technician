@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 import { colors } from "../../theme/theme";
 
 const { width, height } = Dimensions.get("screen");
@@ -24,11 +24,10 @@ export const styles = StyleSheet.create({
   },
 
   logoContainer: {
-    flex: 0.4,
+    flex: Platform.OS == "ios" ? 0.4 : 0.3,
     alignItems: "center",
     justifyContent: "center",
   },
-  
 
   logo: {
     transform: [
@@ -38,7 +37,7 @@ export const styles = StyleSheet.create({
     ],
   },
   body: {
-    flex: 0.6,
+    flex: Platform.OS == "ios" ? 0.6 : 0.7,
     backgroundColor: colors.background_secondary,
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
@@ -52,9 +51,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     backgroundColor: colors.background_secondary,
-    shadowColor: colors.gray,
+    shadowColor: Platform.OS == "ios" ? colors.gray : colors.light_gray,
     shadowOpacity: 0.9,
-    elevation: 8,
+    elevation: 10,
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
   },
@@ -86,7 +85,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#0fdf0f",
     width: width / 1.2,
     alignSelf: "center",
-    padding: 20,
+    padding: Platform.OS == "ios" ? 20 : 15,
     marginVertical: 30,
     alignItems: "center",
     justifyContent: "center",

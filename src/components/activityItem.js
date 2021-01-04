@@ -1,7 +1,7 @@
 import React from "react";
 import { Bar } from "react-native-progress";
 import { FontAwesome } from "@expo/vector-icons";
-import { StyleSheet, View, Text, Dimensions } from "react-native";
+import { StyleSheet, View, Text, Dimensions, Platform } from "react-native";
 import { colors } from "../theme/theme";
 
 const { width, height } = Dimensions.get("screen");
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     alignSelf: "center",
-    marginVertical: 5,
+    marginVertical: Platform.OS == "ios" ? 5 : 3,
     paddingHorizontal: 5,
   },
   activity_icon: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   activity_item_text: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 10,
+    padding: Platform.OS == "ios" ? 10 : 8,
   },
 
   activity_item_progress: {

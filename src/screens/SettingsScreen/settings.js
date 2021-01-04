@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, Alert } from "react-native";
+import { Text, View, Image, Alert, Platform } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { Header } from "../../components";
@@ -25,10 +25,7 @@ const SettingButton = ({ title, value, backNav, onPress }) => (
     </View>
     <View style={{ flex: backNav ? 0.3 : 0.1, marginLeft: value ? 10 : 0 }}>
       {backNav ? (
-        <Image
-          source={require("../../assets/icons/navigation_back.png")}
-          style={styles.img}
-        />
+        <Image source={require("../../assets/icons/navigation_back.png")} />
       ) : (
         <Entypo name="chevron-right" size={22} color={colors.button_primary} />
       )}
@@ -107,7 +104,7 @@ const App = (props) => {
             <SettingButton
               title={item.title}
               value={item.value}
-              backNav={item.backNav}
+              backNav={Platform.OS !== "android" ? item.backNav : false}
               onPress={item.onPress}
             />
           )}

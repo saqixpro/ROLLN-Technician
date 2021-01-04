@@ -6,6 +6,8 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ActivityIndicator,
+  Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import { Header } from "../../components";
@@ -16,7 +18,6 @@ import * as Location from "expo-location";
 import { colors } from "../../theme/theme";
 import BottomSheet from "reanimated-bottom-sheet";
 import { FlatList, TextInput } from "react-native-gesture-handler";
-import { log } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -276,52 +277,65 @@ const App = (props) => {
           </View>
           <View style={[{ flex: 0.9 }, styles.searchBar]}>
             <TextInput
+              style={{ marginLeft: Platform.OS == "android" ? 10 : 0 }}
               placeholder="Enter Your Vehicle Location"
               placeholderTextColor={colors.light_gray}
             />
           </View>
         </View>
       </View>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        showsCompass
-        initialRegion={location?.coords}
-        followsUserLocation
-        customMapStyle={MapStyle}
-        style={styles.maps}
-      >
-        {availableRepairs.map((item) => (
-          <Marker
-            onPress={() => setSelectedRepair(item)}
-            style={{ width: 50, height: 50 }}
-            coordinate={item.coords}
-          >
+      {location ? (
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          initialRegion={location?.coords}
+          followsUserLocation
+          customMapStyle={MapStyle}
+          style={styles.maps}
+        >
+          {availableRepairs.map((item) => (
+            <Marker
+              onPress={() => setSelectedRepair(item)}
+              style={{ width: 50, height: 50 }}
+              coordinate={item.coords}
+            >
+              <Image
+                source={require("../../assets/icons/car_marker.png")}
+                style={[
+                  styles.marker,
+                  {
+                    transform: [
+                      {
+                        scale: 0.8,
+                      },
+                      {
+                        rotateZ:
+                          Math.floor(Math.random() * 360).toString() + "deg",
+                      },
+                    ],
+                  },
+                ]}
+              />
+            </Marker>
+          ))}
+          <Marker coordinate={location?.coords}>
             <Image
-              source={require("../../assets/icons/car_marker.png")}
-              style={[
-                styles.marker,
-                {
-                  transform: [
-                    {
-                      scale: 0.8,
-                    },
-                    {
-                      rotateZ:
-                        Math.floor(Math.random() * 360).toString() + "deg",
-                    },
-                  ],
-                },
-              ]}
+              source={require("../../assets/navIcon.png")}
+              style={{ width: width / 3.5, height: width / 3.5 }}
             />
           </Marker>
-        ))}
-        <Marker coordinate={location?.coords}>
-          <Image
-            source={require("../../assets/navIcon.png")}
-            style={{ width: width / 3.5, height: width / 3.5 }}
-          />
-        </Marker>
-      </MapView>
+        </MapView>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: colors.background,
+          }}
+        >
+          <ActivityIndicator size="small" color={colors.button_primary} />
+        </View>
+      )}
       <BottomSheet
         ref={sheetRef}
         enabledBottomInitialAnimation

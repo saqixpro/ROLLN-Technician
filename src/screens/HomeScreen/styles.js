@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 import { colors } from "../../theme/theme";
 
 const { width, height } = Dimensions.get("screen");
@@ -125,9 +125,14 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: -2, height: -2 },
     shadowOpacity: 0.9,
     shadowRadius: 0,
-    padding: 20,
+    padding: Platform.OS == "ios" ? 20 : 10,
     borderRadius: 20,
     color: colors.textColor,
     fontSize: 16,
+  },
+
+  marker: {
+    width: "110%",
+    height: "100%",
   },
 });

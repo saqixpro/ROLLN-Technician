@@ -1,7 +1,6 @@
 import React from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Entypo } from "@expo/vector-icons";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { colors } from "../theme/theme";
 const App = ({ navigation }) => {
   return (

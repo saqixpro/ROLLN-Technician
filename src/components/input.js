@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import {
   TextInput,
   TouchableOpacity,
@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
       height: 0,
     },
     shadowRadius: 3,
-    elevation: 8,
     flexDirection: "row",
   },
   eye: {
@@ -88,8 +87,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   input: {
-    padding: 15,
-    width: "100%",
+    padding: Platform.OS == "android" ? 10 : 15,
+    marginLeft: Platform.OS == "android" ? 10 : 0,
+    width: Platform.OS == "ios" ? "100%" : "95%",
     fontSize: 16,
     color: colors.textColor,
     zIndex: 1,

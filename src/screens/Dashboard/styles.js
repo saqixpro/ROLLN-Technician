@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 import { colors } from "../../theme/theme";
 
 const { width, height } = Dimensions.get("screen");
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   body: {
     width,
-    height: height / 1.2,
+    height: Platform.OS == "ios" ? height / 1.2 : height / 1.28,
     backgroundColor: colors.background_secondary,
     position: "absolute",
     left: 0,
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   activity_large: {
     width: "95%",
     alignSelf: "center",
-    height: height / 3.5,
+    height: Platform.OS == "android" ? height / 3.8 : height / 3.5,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.gray,

@@ -10,7 +10,7 @@ const App = (props) => {
   return (
     <ImageBackground
       style={{ ...StyleSheet.absoluteFill }}
-      source={require("../../../assets/Splash.png")}
+      source={require("../../../assets/splash.png")}
     />
   );
 };

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Platform,
+  Animated,
 } from "react-native";
 import { connect } from "react-redux";
 import { Header } from "../../components";
@@ -18,6 +19,7 @@ import * as Location from "expo-location";
 import { colors } from "../../theme/theme";
 import BottomSheet from "reanimated-bottom-sheet";
 import { FlatList, TextInput } from "react-native-gesture-handler";
+import AlertModal from './alertModal'
 
 const { width, height } = Dimensions.get("screen");
 
@@ -151,6 +153,7 @@ const BottomSheetContent = ({
 const App = (props) => {
   const [location, setLocation] = useState(null);
   const sheetRef = useRef(null);
+  const [alertVisible, setAlertVisible] = useState(false);
   const [availableRepairs, setAvailableRepairs] = useState([
     {
       id: 1,
@@ -223,6 +226,28 @@ const App = (props) => {
   ]);
 
   const [selectedRepair, setSelectedRepair] = useState(availableRepairs[0]);
+  const [headerAlignment] = useState(new Animated.Value(0));
+
+  const animateHeader = (val) => {
+    Animated.timing(headerAlignment, {
+      toValue: val,
+      duration: 500,
+      useNativeDriver: true
+    }).start()
+  }
+
+  const headerIntropolate = headerAlignment.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -height / 2]
+  })
+
+  const animatedHeader = {
+    transform: [
+      {
+        translateY: headerIntropolate
+      }
+    ]
+  }
 
   useEffect(() => {
     (async () => {
@@ -238,9 +263,24 @@ const App = (props) => {
     })();
   }, []);
 
+
+  useEffect(() => {
+    if (alertVisible) {
+      sheetRef.current.snapTo(2);
+      animateHeader(1);
+    } else {
+      sheetRef.current.snapTo(0);
+      animateHeader(0)
+    }
+  }, [alertVisible])
+
+ const onSubmit_CompleteRepair = () => {
+    setAlertVisible(false)
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <Animated.View style={[styles.header, animatedHeader]}>
         <View style={styles.horizontalContainer}>
           <View style={{ flex: 0.27 }}>
             <TouchableOpacity
@@ -283,7 +323,7 @@ const App = (props) => {
             />
           </View>
         </View>
-      </View>
+      </Animated.View>
       {location ? (
         <MapView
           provider={PROVIDER_GOOGLE}
@@ -317,7 +357,7 @@ const App = (props) => {
               />
             </Marker>
           ))}
-          <Marker coordinate={location?.coords}>
+          <Marker coordinate={location?.coords} onPress={() => setAlertVisible(!alertVisible)}>
             <Image
               source={require("../../assets/navIcon.png")}
               style={{ width: width / 3.5, height: width / 3.5 }}
@@ -335,12 +375,12 @@ const App = (props) => {
         >
           <ActivityIndicator size="small" color={colors.button_primary} />
         </View>
-      )}
+        )}
+
       <BottomSheet
         ref={sheetRef}
         enabledBottomInitialAnimation
-        snapPoints={[height / 4, height / 2]}
-        initialSnap={0}
+        snapPoints={[height / 4, height / 2, height / 12]}
         borderRadius={25}
         renderContent={() => (
           <BottomSheetContent
@@ -350,6 +390,8 @@ const App = (props) => {
           />
         )}
       />
+      <AlertModal visible={alertVisible} onSubmit={onSubmit_CompleteRepair} />
+
     </View>
   );
 };

@@ -39,6 +39,7 @@ const App = (props) => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [SSN, setSSN] = useState("");
   const [alignment] = useState(new Animated.Value(0));
+  const [address, setAddress] = useState("");
 
   const animateView = (index) =>
     Animated.timing(alignment, {
@@ -98,41 +99,62 @@ const App = (props) => {
       carInsuranceProvider
     );
 
-    if (emailValid)
-      if (passwordValid)
-        if (yearValid)
-          if (makeValid)
-            if (modelValid)
-              if (licenseValid)
-                if (licensePlateValid)
-                  if (CIPValid)
-                    if (ageValid)
-                      if (ssnValid)
-                        // Draft Registeration Data
-                        // To Next Steps
-                        props.navigation.navigate("phoneVerification");
+
+      if (emailValid)
+        if (passwordValid)
+          if (yearValid)
+            if (makeValid)
+              if (modelValid)
+                if (licenseValid)
+                  if (licensePlateValid)
+                    if (CIPValid)
+                      if (ageValid)
+                        if (ssnValid) {
+                          // Draft Registeration Data
+                          const draft = {
+                            name,
+                            email,
+                            address,
+                            dateOfBirth,
+                            ssn: SSN,
+                            stars: 0,
+                            repairs: [],
+                            carDetails: {
+                              year,
+                              make,
+                              model,
+                              licensePlateNumber,
+                              carInsuranceProvider,
+                              licenseNumber
+                            },
+
+                          }
+
+                          props.draftUser(draft);
+                          // To Next Steps
+                          props.navigation.navigate("paymentInfo");
+                        } else
+                          Alert.alert(
+                            "Validation Error",
+                            LanguageJSON.INVALID_SSN
+                          );
                       else
-                        Alert.alert(
-                          "Validation Error",
-                          LanguageJSON.INVALID_SSN
-                        );
+                        Alert.alert("Validation Error", LanguageJSON.INVALID_AGE);
                     else
-                      Alert.alert("Validation Error", LanguageJSON.INVALID_AGE);
+                      Alert.alert("Validation Error", LanguageJSON.INVALID_CIP);
                   else
-                    Alert.alert("Validation Error", LanguageJSON.INVALID_CIP);
+                    Alert.alert(
+                      "Validation Error",
+                      LanguageJSON.INVALID_LICENSE_PLATE
+                    );
                 else
-                  Alert.alert(
-                    "Validation Error",
-                    LanguageJSON.INVALID_LICENSE_PLATE
-                  );
-              else
-                Alert.alert(`Validation Error`, LanguageJSON.INVALID_LICENSE);
-            else Alert.alert(`Validation Error`, LanguageJSON.INVALID_MODEL);
-          else Alert.alert("Validation Error", LanguageJSON.INVALID_MAKE);
-        else Alert.alert("Validation Error", LanguageJSON.INVALID_YEAR);
-      else Alert.alert(`Validation Error`, LanguageJSON.INVALID_PASSWORD);
-    else Alert.alert(`Validation Error`, LanguageJSON.INVALID_EMAIL);
-  };
+                  Alert.alert(`Validation Error`, LanguageJSON.INVALID_LICENSE);
+              else Alert.alert(`Validation Error`, LanguageJSON.INVALID_MODEL);
+            else Alert.alert("Validation Error", LanguageJSON.INVALID_MAKE);
+          else Alert.alert("Validation Error", LanguageJSON.INVALID_YEAR);
+        else Alert.alert(`Validation Error`, LanguageJSON.INVALID_PASSWORD);
+      else Alert.alert(`Validation Error`, LanguageJSON.INVALID_EMAIL); 
+  }
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -187,6 +209,7 @@ const App = (props) => {
           ]}
         >
           <ScrollView style={{ height: height / 3.83 }}>
+            <Text style={styles.text}>Personal Details</Text>
             <Input placeholder="Name*" onChangeText={(text) => setName(text)} />
             <Input
               placeholder="Email*"
@@ -199,6 +222,12 @@ const App = (props) => {
               onChangeText={(text) => setPassword(text)}
               onEyePress={() => setSecureText(!secureText)}
             />
+            <Input placeholder="Address *" onChangeText={text => setAddress(text)} textContentType="addressCityAndState"  />
+            <Input
+              placeholder="Date of Birth*"
+              onChangeText={(text) => setDateOfBirth(text)}
+            />
+            <Text style={styles.text}>Car Details</Text>
             <Input placeholder="Year" onChangeText={(text) => setYear(+text)} />
             <Input placeholder="Make*" onChangeText={(text) => setMake(text)} />
             <Input
@@ -217,10 +246,7 @@ const App = (props) => {
               placeholder="Car Insurance Provider and Policy Number*"
               onChangeText={(text) => setCarInsuranceProvider(text)}
             />
-            <Input
-              placeholder="Date of Birth*"
-              onChangeText={(text) => setDateOfBirth(text)}
-            />
+            <Text style={styles.text}>Other Information</Text>
             <Input
               placeholder="Social Security Number*"
               onChangeText={(text) => setSSN(text)}
@@ -270,6 +296,12 @@ const mapDispatchToProps = (dispatch) => ({
         user,
       },
     }),
+  draftUser: (user) => dispatch({
+    type: ActionTypes.DRAFT_ACCOUNT,
+    payload: {
+      user
+    }
+  })
 });
 const connectComponent = connect(mapStateToProps, mapDispatchToProps);
 export default connectComponent(App);

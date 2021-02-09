@@ -6,6 +6,7 @@ import {
 import {
   AccountScreen,
   Dashboard,
+  Deposit,
   HomeScreen,
   InviteFriends,
   PaymentScreen,
@@ -30,6 +31,7 @@ const App = (props) => {
       <Screen name="payments" component={PaymentScreen} />
       <Screen name="settings" component={SettingsScreen} />
       <Screen name="Account" component={AccountScreen} />
+      <Screen name="Deposit" component={Deposit} />
     </Navigator>
   );
 };

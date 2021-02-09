@@ -3,6 +3,7 @@ import { MainNav } from "./src/navigation";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
 import { StatusBar } from "react-native";
+import './constants/firebase'
 
 export default function App() {
   return (

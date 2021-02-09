@@ -6,6 +6,8 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import { colors } from "../../theme/theme";
 import { BackButton } from "../../components";
+import EditModal from './editModal';
+import { Modes } from "./modalModes";
 
 const Stars = (val) => {
   const value = Math.round(val);
@@ -54,50 +56,55 @@ const SettingButton = ({ title, value, backNav, onPress }) => (
 
 const App = (props) => {
   const starColor = Stars(props.currentUser?.stars);
+  const [mode, setMode] = useState("");
   const [options, setOptions] = useState([
     {
       title: "Email",
-      onPress: () => alert(`Will Be Redirected To Email Edit`),
+      onPress: () => changeMode(Modes.EMAIL),
       backNav: false,
       value: null,
     },
     {
       title: "Phone",
-      onPress: () => alert(`Will Be Redirected To Phone Edit`),
+      onPress: () => changeMode(Modes.PHONE),
       backNav: true,
       value: null,
     },
     {
       title: "Home Address",
-      onPress: () => alert(`Will Be Redirected To Address Edit`),
+      onPress: () => changeMode(Modes.HOME_ADDRESS),
       backNav: false,
       value: props.currentUser?.address,
     },
     {
       title: "Direct Deposit",
-      onPress: () => alert(`Will Be Redirected To Deposit Screen`),
+      onPress: () => props.navigation.navigate("Deposit"),
       backNav: true,
       value: null,
     },
     {
       title: "Account Number",
-      onPress: () => alert(`Will Be Redirected To Account Number Edit`),
+      onPress: () => changeMode(Modes.ACCOUNT_NUMBER),
       backNav: true,
       value: null,
     },
     {
       title: "Routing Number",
-      onPress: () => alert(`Will Be Redirected To Routing Number Edit`),
+      onPress: () => changeMode(Modes.ROUTING_NUMBER),
       backNav: false,
       value: "English",
     },
     {
       title: "Emergency Contact",
-      onPress: () => alert(`Will Be Redirected To Emergency Contact Edit`),
+      onPress: () => changeMode(Modes.EMERGENCY_CONTACT),
       backNav: true,
       value: null,
     },
   ]);
+
+
+  const changeMode = (mode) => setMode(mode);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -150,6 +157,7 @@ const App = (props) => {
           )}
         />
       </View>
+      <EditModal currentUser={props.currentUser} visible={mode !== ""} changeMode={changeMode} mode={mode} />
     </View>
   );
 };

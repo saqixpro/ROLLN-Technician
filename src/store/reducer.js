@@ -15,6 +15,16 @@ export const reducer = (state = initialState, action) => {
         loginState: LoginStates.LOGGED_OUT,
         currentUser: null,
       };
+    case ActionTypes.DRAFT_ACCOUNT:
+      return {
+        ...state,
+        draftAccount: action.payload.accountInfo
+      }
+    case ActionTypes.UPDATE_CC:
+      return {
+        ...state,
+        draftAccount: {...state.draftAccount, CCInfo: action.payload.CCInfo}
+      }
     default:
       return state;
   }

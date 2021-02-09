@@ -9,7 +9,10 @@ import { RepairHistory } from "./RepairHistory";
 import { PaymentScreen } from "./Payments";
 import { SettingsScreen } from "./SettingsScreen";
 import { AccountScreen } from "./Account";
+import { PaymentInfo } from './PaymentInfo'
+import {Deposit} from './DirectDeposit'
 export {
+  Deposit,
   LoginScreen,
   HomeScreen,
   Onboarding,
@@ -21,4 +24,5 @@ export {
   PaymentScreen,
   SettingsScreen,
   AccountScreen,
+  PaymentInfo
 };

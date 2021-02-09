@@ -17,6 +17,16 @@ const App = ({
   onEyePress,
   onChangeText,
   ContainerWidth,
+  textContentType,
+  keyboardType,
+  maxLength,
+  value,
+  radius,
+  style,
+  padding,
+  onFocus,
+  onBlur,
+  innerRef
 }) => {
   return (
     <View
@@ -26,14 +36,25 @@ const App = ({
           width: ContainerWidth ? ContainerWidth : width / 1.1,
           alignSelf: custom ? "flex-start" : "center",
         },
+        {
+          borderRadius: radius || 15, ...style
+        }
       ]}
     >
       <TextInput
-        style={styles.input}
+        style={[styles.input, {    padding: padding ? padding : Platform.OS == "android" ? 10 : 15,
+        }]}
+        ref={innerRef}
         placeholder={placeholder}
         secureTextEntry={secureText}
         onChangeText={onChangeText}
-        placeholderTextColor={colors.textColor}
+        keyboardType={keyboardType}
+        textContentType={textContentType}
+        maxLength={maxLength}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        value={value}
+        placeholderTextColor={colors.light_gray}
       />
       {type == "password" ? (
         <View style={styles.eye}>
@@ -53,7 +74,6 @@ const App = ({
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
-    borderRadius: 15,
     borderColor: colors.gray,
     borderWidth: 2,
     alignItems: "center",
@@ -87,7 +107,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   input: {
-    padding: Platform.OS == "android" ? 10 : 15,
     marginLeft: Platform.OS == "android" ? 10 : 0,
     width: Platform.OS == "ios" ? "100%" : "95%",
     fontSize: 16,

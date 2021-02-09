@@ -6,7 +6,10 @@ export const initialState = {
     name: "Aron Doe",
     address: "West Hollywood",
   },
+  draftAccount: null,
 };
+
+
 
 export const tempUser = {
   name: "Saqib Khan",
@@ -15,6 +18,7 @@ export const tempUser = {
   avatar:
     "http://www.newsshare.in/wp-content/uploads/2017/04/Miniclip-8-Ball-Pool-Avatar-8.png",
   password: "Saqib1",
+  emergencyContact: "+11234345432",
   carDetails: {
     year: 2020,
     make: "Toyota",
@@ -26,6 +30,21 @@ export const tempUser = {
   dateOfBirth: "12-04-1997",
   ssn: "GRYQ-09-211P8",
   stars: 3.3,
+  depositInfo: {
+    bankName: "HBL",
+    accountNumber: '123456789101112',
+    routingNumber: "123456789",
+    address: "Los Santos, CA"
+  },
+  CCINfo: {
+    cardNumber: "",
+    expiry: {
+      month: "MM",
+      year: "YYYY"
+    },
+    cardHolderName: "",
+    CVV: ""
+  },
   repairs: [
     {
       date: "12/04/2020",
